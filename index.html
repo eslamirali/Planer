@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f6f7f3">
+  <meta name="description" content="روزنو؛ پلنر عادت‌ها و روتین روزانه با گزارش ماهانه و ذخیره‌سازی خصوصی در مرورگر.">
+  <title>روزنو — عادت‌های کوچک، تغییرهای بزرگ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#home"><span class="brand-logo"><svg viewBox="0 0 36 36" aria-hidden="true"><path d="M18 3.8 21.9 13l9.3 4.1-9.3 3.8L18 30.2l-3.9-9.3-9.3-3.8 9.3-4.1L18 3.8Z"/><circle cx="27.7" cy="7.8" r="2.2"/></svg></span><span><strong>روزنو</strong><small>هر روز، یک قدم جلوتر</small></span></a>
+      <div class="sidebar-caption">فضای شخصی</div>
+      <nav class="main-nav" aria-label="منوی اصلی">
+        <button class="nav-item active" data-view="today"><span class="nav-emoji">◷</span><span>برنامه امروز</span><span class="nav-arrow">‹</span></button>
+        <button class="nav-item" data-view="habits"><span class="nav-emoji">✳</span><span>عادت‌های من</span></button>
+        <button class="nav-item" data-view="reports"><span class="nav-emoji">▥</span><span>گزارش ماهانه</span></button>
+      </nav>
+      <div class="sidebar-spacer"></div>
+      <div class="sidebar-quote"><span class="quote-spark">✦</span><p>بهترین برنامه، برنامه‌ای نیست که بی‌نقص اجرا شود؛ برنامه‌ای است که دوباره به آن برمی‌گردی.</p><small>یادآوری روزنو</small></div>
+      <div class="privacy-note"><span class="privacy-dot"></span><div><strong>اطلاعات فقط برای توست</strong><small>روی همین مرورگر ذخیره می‌شود.</small></div></div>
+      <button class="side-action" id="exportBtn">↥ <span>خروجی و نسخه پشتیبان</span></button>
+      <button class="side-action" id="importBtn">↧ <span>بازیابی نسخه پشتیبان</span></button>
+      <input type="file" id="importFile" accept="application/json,.json" hidden>
+    </aside>
+
+    <main class="main-content" id="home">
+      <header class="topbar"><div class="mobile-brand"><span class="brand-logo small"><svg viewBox="0 0 36 36"><path d="M18 3.8 21.9 13l9.3 4.1-9.3 3.8L18 30.2l-3.9-9.3-9.3-3.8 9.3-4.1L18 3.8Z"/><circle cx="27.7" cy="7.8" r="2.2"/></svg></span><strong>روزنو</strong></div><div class="top-date" id="topDate">—</div><button class="icon-button" id="exportTop" title="نسخه پشتیبان" aria-label="نسخه پشتیبان">↥</button></header>
+
+      <section class="hero-row"><div class="hero-copy"><div class="eyebrow"><span></span> مسیر بهتر شدن، از همین امروز</div><h1 id="greeting">صبح بخیر، آماده‌ای؟</h1><p>قرار نیست هر روز عالی باشه؛ فقط کافیه هر روز کمی آگاهانه‌تر زندگی کنی.</p><div class="hero-date"><button id="prevDay" aria-label="روز قبل">›</button><strong id="selectedDateLabel">—</strong><button id="nextDay" aria-label="روز بعد">‹</button><button id="datePickerToggle" class="calendar-button">تقویم <span>▦</span></button><input id="datePicker" type="date" hidden></div></div>
+        <div class="hero-art" aria-label="نمایش پیشرفت روزانه"><div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div><div class="art-sun">✦</div><div class="art-leaf leaf-one">⌁</div><div class="art-leaf leaf-two">⌁</div><div class="art-center"><span>پیشرفت امروز</span><strong id="heroPercent">۰٪</strong><small id="heroDone">۰ از ۰ عادت</small></div><div class="art-chip chip-top">یک قدم کوچک</div><div class="art-chip chip-bottom">✧ استمرار مهمه</div></div>
+      </section>
+
+      <section class="summary-grid" aria-label="خلاصه عملکرد"><article class="summary-card"><div class="summary-icon icon-green">✓</div><div><span>انجام‌شده امروز</span><strong id="doneCount">۰ <small>عادت</small></strong><p id="doneHint">هنوز شروع نکردی</p></div></article><article class="summary-card"><div class="summary-icon icon-peach">◷</div><div><span>باقی‌مانده امروز</span><strong id="remainingCount">۰ <small>عادت</small></strong><p>هرکدوم رو که می‌تونی شروع کن</p></div></article><article class="summary-card monthly-summary"><div class="summary-icon icon-lilac">↗</div><div><span>میانگین این ماه</span><strong id="monthPercent">۰٪</strong><p id="monthHint">پیشرفتت در مسیر ثبت می‌شه</p></div><div class="mini-bars" id="miniBars" aria-hidden="true"></div></article></section>
+
+      <section class="content-view" id="todayView">
+        <div class="section-heading"><div><span class="section-label">روتین روزانه</span><h2>عادت‌های امروزت <span class="heading-spark">✳</span></h2><p>انجام هر عادت رو ثبت کن تا روندت رو بهتر بشناسی.</p></div><button class="primary-button" id="addHabitTop"><span>＋</span> عادت جدید</button></div>
+        <div class="routine-layout"><div class="habit-panel panel"><div class="panel-topline"><div><strong>چک‌لیست امروز</strong><small id="habitDateCaption">—</small></div><span class="live-pill"><i></i> ذخیره خودکار</span></div><div class="habit-groups" id="habitList"></div><div class="habit-panel-footer"><span id="todayFooterText">شروع خوب، نصف راهه.</span><button class="text-action" id="manageHabits">مدیریت عادت‌ها ←</button></div></div>
+          <aside class="daily-side"><div class="streak-card"><div class="streak-top"><span>🔥</span><span class="streak-tag">روند استمرار</span></div><strong id="streakCount">۰ روز</strong><p>روزهای پیاپی که حداقل یک عادت رو انجام دادی.</p><div class="streak-dots" id="streakDots"></div></div><div class="reflection-card"><div class="reflection-icon">✎</div><h3>یادداشت کوتاه امروز</h3><p>چه چیزی امروز خوب پیش رفت؟ فردا چه چیزی رو بهتر می‌کنی؟</p><textarea id="dailyNote" maxlength="1500" placeholder="چند کلمه برای خودت بنویس..."></textarea><div class="note-bottom"><span id="noteCount">۰ نویسه</span><span><i></i> ذخیره شد</span></div></div></aside></div>
+      </section>
+
+      <section class="content-view hidden" id="habitsView"><div class="section-heading"><div><span class="section-label">طراحی روتین</span><h2>عادت‌هایی که می‌سازی</h2><p>زمان و ترتیب عادت‌ها رو با سبک زندگی خودت هماهنگ کن.</p></div><button class="primary-button" id="addHabit">＋ افزودن عادت</button></div><div class="manage-intro"><span class="manage-intro-icon">✦</span><div><strong>از کم شروع کن، بعد گسترش بده.</strong><p>عادت‌های پیش‌فرض قابل ویرایش‌اند؛ عادت تازه هم هر وقت خواستی اضافه کن.</p></div></div><div class="manage-habit-list" id="manageHabitList"></div></section>
+
+      <section class="content-view hidden" id="reportsView"><div class="section-heading report-heading"><div><span class="section-label">مرور بدون قضاوت</span><h2>گزارش پیشرفت تو</h2><p>قرار نیست سرزنش بشی؛ این گزارش کمک می‌کنه بفهمی کجا به توجه بیشتری نیاز داری.</p></div><div class="month-picker"><button id="prevMonth" aria-label="ماه قبل">›</button><strong id="reportMonth">—</strong><button id="nextMonth" aria-label="ماه بعد">‹</button></div></div><div class="report-hero panel"><div class="report-score"><span>درصد تکمیل عادت‌ها</span><strong id="reportPercent">۰٪</strong><small id="reportCompleted">۰ مورد از ۰ مورد</small></div><div class="report-ring-wrap"><svg class="report-ring" viewBox="0 0 120 120" aria-label="درصد تکمیل ماه"><circle class="ring-bg" cx="60" cy="60" r="48"></circle><circle class="ring-fill" id="reportRing" cx="60" cy="60" r="48"></circle></svg><div class="ring-center"><strong id="ringPercent">۰٪</strong><span>این ماه</span></div></div><div class="report-message"><span class="message-icon">✧</span><strong id="reportMessageTitle">پیشرفت با قدم‌های کوچک ساخته می‌شه.</strong><p id="reportMessage">با ثبت عادت‌ها، گزارش شخصی تو شکل می‌گیره.</p></div></div><div class="report-grid"><section class="panel report-panel"><div class="panel-title"><div><span class="section-label">مقایسه عادت‌ها</span><h3>کجا نیاز به توجه داری؟</h3></div><span class="panel-badge">این ماه</span></div><div id="habitReportList" class="habit-report-list"></div></section><section class="panel report-panel"><div class="panel-title"><div><span class="section-label">ثبات در طول ماه</span><h3>تقویم عملکرد</h3></div></div><div class="calendar-legend"><span><i class="level-0"></i> بدون ثبت</span><span><i class="level-1"></i> کم</span><span><i class="level-2"></i> متوسط</span><span><i class="level-3"></i> عالی</span></div><div class="month-calendar" id="monthCalendar"></div><p class="calendar-caption">هر خانه نشان‌دهنده‌ی درصد عادت‌های انجام‌شده در همان روز است.</p></section></div><section class="panel insight-panel"><div class="insight-heading"><span class="insight-icon">✦</span><div><span class="section-label">بینش شخصی</span><h3>پیشنهاد برای ماه بعد</h3></div></div><div id="insightList" class="insight-list"></div></section></section>
+
+      <footer class="app-footer"><span>روزنو <i>·</i> عادت‌های کوچک، تغییرهای بزرگ</span><span><i class="privacy-dot"></i> ذخیره‌سازی محلی و خصوصی</span></footer>
+    </main>
+  </div>
+  <dialog id="habitDialog" class="app-dialog"><form id="habitForm" method="dialog"><div class="dialog-top"><div><span class="section-label">روتین شخصی</span><h3 id="habitDialogTitle">عادت جدید</h3></div><button type="button" class="dialog-close" id="closeHabitDialog" aria-label="بستن">×</button></div><input type="hidden" id="habitId"><label>نام عادت<input id="habitName" type="text" maxlength="70" placeholder="مثلاً نوشیدن آب" required></label><div class="form-row"><label>زمان پیشنهادی<input id="habitTime" type="time"></label><label>دسته‌بندی<select id="habitCategory"><option value="morning">صبح</option><option value="day">طول روز</option><option value="evening">شب</option><option value="anytime">هر زمان</option></select></label></div><label>نشانه یا ایموجی<input id="habitEmoji" type="text" maxlength="4" placeholder="✦"></label><div class="dialog-actions"><button type="button" class="secondary-button" id="cancelHabit">انصراف</button><button type="submit" class="primary-button">ذخیره عادت</button></div></form></dialog>
+  <dialog id="confirmDialog" class="app-dialog confirm-dialog"><div class="confirm-symbol">!</div><h3 id="confirmTitle">مطمئنی؟</h3><p id="confirmText">این کار قابل برگشت نیست.</p><div class="dialog-actions"><button class="secondary-button" id="confirmCancel">انصراف</button><button class="danger-button" id="confirmYes">تأیید</button></div></dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
